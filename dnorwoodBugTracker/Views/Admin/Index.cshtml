@@ -1,0 +1,44 @@
+﻿@model IEnumerable<dnorwoodBugTracker.Models.AdminUserViewModels>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+           Email
+        </th>
+        <th>
+            Roles
+        </th>    
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Email)
+            </td>
+            <td>
+                @foreach(var role in item.SelectedRoles)
+                {
+                    <p>@role</p>
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Edit Roles", "EditUserRoles", new { id = item.User.Id })
+            </td>
+        </tr>
+    }
+
+</table>

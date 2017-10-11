@@ -1,0 +1,18 @@
+﻿@model dnorwoodBugTracker.Models.ProjectsViewModel
+
+@{
+    ViewBag.Title = "ProjectAssign";
+}
+
+<h2>Assign Users to Project</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.AssignProjectId)
+
+    <h4> Project Name : @Model.AssignProject.Title</h4>
+ 
+    @Html.ListBox("SelectedUsers", Model.Users)
+    <button type="submit">Submit</button>
+}
+

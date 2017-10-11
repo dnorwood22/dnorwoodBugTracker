@@ -1,0 +1,111 @@
+﻿@model IEnumerable<dnorwoodBugTracker.Models.CodeFirst.Ticket>
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">My Tables</li>
+    </ol>
+    <!-- Example DataTables Card-->
+    @if (User.IsInRole("Submitter"))
+                {
+                    <p>
+                        @Html.ActionLink("Create New", "Create")
+                    </p>
+                }
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fa fa-table"></i>Tickets
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="myDataTable" style="width: 100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Start Date</th>
+                            <th>Project Name</th>
+                            <th>Ticket Owner</th>
+                            <th>Priority</th>
+                            <th>Ticket Status</th>
+                            <th>Ticket Type</th>
+                            <th>Description</th>
+                            <th>Assigned User</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Start Date</th>
+                            <th>Project Name</th>
+                            <th>Ticket Owner</th>
+                            <th>Ticket Priority</th>
+                            <th>Ticket Status</th>
+                            <th>Ticket Type</th>
+                            <th>Description</th>
+                            <th>Assigned User</th>
+                            <th>Action</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @(Html.DisplayFor(modelItem => item.Project.Title))
+                                </td>
+                                <td>
+                                   @(Html.DisplayFor(modelItem => item.Created))
+                                </td>
+                                <td>
+                                   @(Html.DisplayFor(modelItem => item.OwnerUser.FullName))
+                                </td>
+                                <td>
+                                    @(Html.DisplayFor(modelItem => item.TicketPriority.Name))
+                                </td>
+                                <td>
+                                    @(Html.DisplayFor(modelItem => item.TicketStatus.Name))
+                                </td>
+                                <td>
+                                    @(Html.DisplayFor(modelItem => item.TicketType.Name))
+                                </td>
+                                <td>
+                                    @(Html.DisplayFor(modelItem => item.Description))
+                                </td>
+                                <td>
+                                    @(Html.DisplayFor(modelItem => item.AssignToUser.FirstName))
+                                </td>
+                                
+                                       
+                                <td>
+                                    @if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
+
+                                    {       
+                                            @Html.ActionLink("Assigned Roles", "Index", "Admin")<br />   
+                                            @*@Html.ActionLink("Assigned Users", "ProjectAssign", new { id = item.Id })<br />*@
+                                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) <br />
+                                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                    }
+
+                                    @Html.ActionLink("Details", "Details", new { id = item.Id }) <br />
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer small text-muted">Updated</div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- Page level plugin JavaScript-->
+    <script src="~/assets/vendor/datatables/jquery.dataTables.js"></script>
+    <script src="~/assets/vendor/datatables/dataTables.bootstrap4.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#myDataTable').DataTable();
+        });
+    </script>
+}
