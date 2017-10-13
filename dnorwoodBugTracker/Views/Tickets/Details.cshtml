@@ -6,6 +6,12 @@
 
 <h2>@Model.Title</h2>
 
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
 <div class="container" style="padding: 10px">
     <h4>Ticket</h4>
     <hr />
@@ -89,18 +95,28 @@
         </dd>*@
 
     </dl>
+
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+
     @using (Html.BeginForm("AddAttachments", "Tickets", FormMethod.Post, new { @class = "ticket-ticketAttachment", enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
 
         <input type="file" name="files" multiple required />
         <input type="hidden" name="ticketId" value="@Model.Id" hidden />
-        <button class="btn btn-default btn-lg" type="submit">Attach</button>
+        <button style="font-size:24px; background-color:aqua" type="submit">Attach<i class="material-icons">attachment</i></button>
     }
 
     @foreach (var attachment in Model.Attachments)
     {
         <a href="/TicketAttachments/@attachment.FileUrl" target="_blank">@attachment.FileUrl</a><br />
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+            @Html.ActionLink("Delete", "AttachmentDelete", "Tickets", new { id = attachment.Id }, null) |
+        </p>
     }
 
 
@@ -119,7 +135,8 @@
                             <span class="input-label-content"></span>
                         </label>
                     </span>
-                    <button class="btn btn-default btn-lg" type="submit">Publish comment</button>
+                    <br />
+                    <button style="font-size:24px;background-color:crimson" type="submit">Publish comment<i class="fa fa-comments-o"></i></button>
             }
         </div><!-- /comment adding -->
     </div><!-- /comments -->
@@ -136,11 +153,10 @@
                             @comment.Body
                         </div>
 
-                    @*if (User.IsInRole("Admin"))
-                    {
-                        <a href="@Url.Action("Edit","Comments", new { id = comment.Id })" class="btn-default">Edit</a>
-                                <a href="@Url.Action("Delete","Comments", new { id = comment.Id })" class="btn-default">Delete</a>
-                    }*@
+                        <p>
+                            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+                            @Html.ActionLink("Delete", "CommentDelete", "Tickets", new { id = comment.Id }, null) |
+                        </p>
 
                 }
             </div>
@@ -154,10 +170,11 @@
     </div>
 
 </div>
-<p>
+@*<p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Delete", "CommentDelete", "Ticket", new { id = Model.Id}) |
     @Html.ActionLink("Back to List", "Index")
-</p>
+</p>*@
 
 <h3>Ticket History</h3>
 
@@ -186,7 +203,34 @@
                 </p>
             </div>
         }
+        else if (history.Property == "COMMENT REMOVED")
+        {
+            <div>
+                <p>
+                    <span style="font-weight: 600">@history.Property</span> - @history.Author.FullName <br />
+                    @history.Created<br />
+                </p>
+            </div>
+        }
+        else if (history.Property == "NEW TICKET CREATED")
+        {
+            <div>
+                <p>
+                    <span style="font-weight: 600">@history.Property</span> - @history.Author.FullName <br />
+                    @history.Created<br />
+                </p>
+            </div>
+        }
+        else if (history.Property == "ATTACHMENT REMOVED")
+        {
+            <div>
+                <p>
+                    <span style="font-weight: 600">@history.Property</span> - @history.Author.FullName <br />
+                    @history.Created<br />
+                </p>
+            </div>
+        }
         <hr/>
-
+       
     }
 }

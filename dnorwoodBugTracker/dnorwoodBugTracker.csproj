@@ -245,6 +245,7 @@
     <Content Include="assets\MultiSelect\MultiSelect.css" />
     <Content Include="assets\MultiSelect\MultiSelect.js" />
     <Content Include="assets\navbar.html" />
+    <Content Include="assets\pics\dexlab.jpg" />
     <Content Include="assets\register.html" />
     <Content Include="assets\tables.html" />
     <Content Include="assets\vendor\bootstrap\css\bootstrap-grid.css" />
@@ -439,6 +440,8 @@
     <Content Include="Views\Manage\ChangeUserInfo.cshtml" />
     <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.2.1.min.map" />
+    <Content Include="Views\Tickets\CommentDelete.cshtml" />
+    <Content Include="Views\Tickets\AttachmentDelete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

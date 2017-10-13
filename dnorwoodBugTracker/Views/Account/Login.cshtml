@@ -5,12 +5,7 @@
 }
 
 <style>
-    /*input{
-            width: 50%;
-        }*/
-    /*form {
-            border: 3px solid #f1f1f1;
-        }*/
+    
     button:hover {
         opacity: 0.8;
     }
@@ -21,21 +16,82 @@
     }
 
     img.avatar {
-        width: 40%;
+        width: 30%;
         border-radius: 50%;
     }
-    /*.container {
-            padding: 16px 75px;
-        }*/
-    /* Change styles for span and cancel button on extra small screens */
-    /*screen and (max-width: 300px)
-            span.psw {
-               display: block;
-               float: none;
+    .button {
+        border-radius: 4px;
+        background-color: #f4511e;
+        border: none;
+        color: #FFFFFF;
+        text-align: center;
+        font-size: 15px;
+        padding: 10px;
+        width: 200px;
+        transition: all 0.5s;
+        cursor: pointer;
+        margin: 5px;
+    }
+
+        .button span {
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            transition: 0.5s;
+        }
+
+            .button span:after {
+                content: '\00bb';
+                position: absolute;
+                opacity: 0;
+                top: 0;
+                right: -20px;
+                transition: 0.5s;
             }
-            .cancelbtn {
-               width: 100%;
-            }*/
+
+        .button:hover span {
+            padding-right: 25px;
+        }
+
+            .button:hover span:after {
+                opacity: 1;
+                right: 0;
+            }
+    .button1 {
+        display: inline-block;
+        padding: 15px 15px;
+        font-size: 20px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        color: #fff;
+        background-color: #4CAF50;
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 9px #999;
+    }
+
+        .button1:hover {
+            background-color: #3e8e41
+        }
+
+        .button1:active {
+            background-color: #3e8e41;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+    .button2 {
+        background-color: white;
+        color: black;
+        border: 2px solid #008CBA;
+        border-radius: 8px;
+    }
+
+        .button2:hover {
+            background-color: #008CBA;
+            color: white;
+        }
 </style>
 <h2>@ViewBag.Title.</h2>
 <div class="row">
@@ -49,7 +105,7 @@
                     <hr />
                     <form action="/action_page.php">
                         <div class="imgcontainer">
-                            <img src="~/assets/static/images/streetart2.jpg" alt="Avatar" class="avatar">
+                            <img src="~/assets/pics/dexlab.jpg" alt="Avatar" class="avatar">
                         </div>
                         <div class="form-horizontal">
                             <div class="form-group">
@@ -69,11 +125,11 @@
                             <div class="form-group">
                                 <div class="col-md-2"></div>
                                 <div class="col-md-4">
-                                    <input type="submit" value="Log in" class="btn btn-default" />
+                                    <input type="submit" value="Log in" class="button1" />
                                 </div>
                                 <div class="col-md-6" style="text-align: right">
                                     @*Enable this once you have account confirmation enabled for password reset functionality*@
-                                    @Html.ActionLink("Forgot your password?", "ForgotPassword")
+                                    <button class="button"><span>@Html.ActionLink("Forgot your password?", "ForgotPassword")</span></button>
                                 </div>
                             </div>
                         </div>
@@ -82,7 +138,7 @@
         </section>
         <hr />
         <div class="col-md-offset-2">
-            <p>Don't have an account? <a href="@Url.Action("Register")" class="pull-right btn btn-default">Register Here</a></p>
+            <p>Don't have an account? <a href="@Url.Action("Register")" class="pull-right button2">Register Here</a></p>
         </div>
     </div>
     <div class="col-md-4">
