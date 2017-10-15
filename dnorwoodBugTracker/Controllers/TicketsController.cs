@@ -175,7 +175,7 @@ namespace dnorwoodBugTracker.Controllers
         {
             var user = db.Users.Find(User.Identity.GetUserId());
             TicketHistory ticketHistory = new TicketHistory();
-            Ticket oldTicket = db.Tickets.Find(ticket.Id);
+            Ticket oldTicket = db.Tickets.AsNoTracking().First(t => t.Id == ticket.Id);
 
             if (ModelState.IsValid)
             {
