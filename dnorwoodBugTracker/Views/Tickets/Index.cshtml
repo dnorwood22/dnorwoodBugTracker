@@ -23,26 +23,24 @@
                 <table class="table table-bordered" id="myDataTable" style="width: 100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Start Date</th>
                             <th>Project Name</th>
+                            <th>Start Date</th>
                             <th>Ticket Owner</th>
-                            <th>Priority</th>
+                            <th>Ticket Priority</th>
                             <th>Ticket Status</th>
                             <th>Ticket Type</th>
-                            <th>Description</th>
                             <th>Assigned User</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>Start Date</th>
                             <th>Project Name</th>
+                            <th>Start Date</th>
                             <th>Ticket Owner</th>
                             <th>Ticket Priority</th>
                             <th>Ticket Status</th>
                             <th>Ticket Type</th>
-                            <th>Description</th>
                             <th>Assigned User</th>
                             <th>Action</th>
                         </tr>
@@ -70,13 +68,9 @@
                                     @(Html.DisplayFor(modelItem => item.TicketType.Name))
                                 </td>
                                 <td>
-                                    @(Html.DisplayFor(modelItem => item.Description))
-                                </td>
-                                <td>
                                     @(Html.DisplayFor(modelItem => item.AssignToUser.FirstName))
                                 </td>
-                                
-                                       
+                          
                                 <td>
                                     @if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
 

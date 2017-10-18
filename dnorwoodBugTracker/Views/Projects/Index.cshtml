@@ -62,6 +62,15 @@
                                     @user.FullName<br />
                                 }
                             </td>
+                            <td>
+                                @Html.ToUserTime(item.Created, ViewBag.UserTimeZone as string, "MM/dd/yyyy h:mm:ss tt")
+                            </td>
+                            <td>
+                                @if (item.Updated != null)
+                                {
+                                    @Html.ToUserTime(item.Updated.Value, ViewBag.UserTimeZone as string, "MM/dd/yyyy h:mm:ss tt")
+                                }
+                            </td>
 
                             <td>
                                 @if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))

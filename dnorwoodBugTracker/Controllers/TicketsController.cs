@@ -11,6 +11,7 @@ using dnorwoodBugTracker.Models.CodeFirst;
 using Microsoft.AspNet.Identity;
 using System.IO;
 using dnorwoodBugTracker.Models.Helper;
+using System.Threading.Tasks;
 
 namespace dnorwoodBugTracker.Controllers
 {
@@ -64,25 +65,20 @@ namespace dnorwoodBugTracker.Controllers
             {
                 return View(ticket);
             }
-            else if (User.IsInRole("Project Manager") && !ticket.Project.Users.Any(u => u.Id == user.Id))
+            else if (User.IsInRole("Project Manager") && ticket.Project.Users.Any(u => u.Id == user.Id))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return View(ticket);
             }
-            else if (User.IsInRole("Developer") && ticket.AssignToUserId != user.Id)
+            else if (User.IsInRole("Developer") && ticket.AssignToUserId == user.Id)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return View(ticket);
             }
-            else if (User.IsInRole("Submitter") && ticket.OwnerUserId != user.Id)
+            else if (User.IsInRole("Submitter") && ticket.OwnerUserId == user.Id)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            else if (user.Roles.Count == 0)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return View(ticket);
             }
 
-
-            return View(ticket);
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
         // GET: Tickets/Create
@@ -138,10 +134,19 @@ namespace dnorwoodBugTracker.Controllers
         [Authorize]
         public ActionResult Edit(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             var user = db.Users.Find(User.Identity.GetUserId());
-            Ticket ticket = db.Tickets.Find(id);
             UserRoleHelper userRoleHelper = new UserRoleHelper();
+            Ticket ticket = db.Tickets.Find(id);           
+            if (ticket == null)
+            {
+                return HttpNotFound();
+            }
 
+            TicketHistory ticketHistory = new TicketHistory();
             var developers = userRoleHelper.UserInRole("Developer");
             var devsOnProj = developers.Where(d => d.Projects.Any(p => p.Id == ticket.ProjectId));
 
@@ -168,14 +173,17 @@ namespace dnorwoodBugTracker.Controllers
 
         //POST: Tickets/Edit/5
         //To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //more details see https://go.microsoft.com/fwlink/?LinkId=317598.        
+        //more details see https://go.microsoft.com/fwlink/?LinkId=317598.  
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Description,Created,Updated,ProjectId,TicketTypeId,TicketPriorityId,TicketStatusId,OwnerUserId,AssignToUserId")] Ticket ticket)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,Description,Created,ProjectId,TicketTypeId,TicketPriorityId,TicketStatusId,OwnerUserId,AssignToUserId")] Ticket ticket)
         {
             var user = db.Users.Find(User.Identity.GetUserId());
+            var edited = false;
             TicketHistory ticketHistory = new TicketHistory();
             Ticket oldTicket = db.Tickets.AsNoTracking().First(t => t.Id == ticket.Id);
+            ApplicationUser oldDev = oldTicket.AssignToUser;
 
             if (ModelState.IsValid)
             {
@@ -189,6 +197,8 @@ namespace dnorwoodBugTracker.Controllers
                     th.TicketId = ticket.Id;
                     db.TicketHistories.Add(th);
                     db.SaveChanges();
+
+                    edited = true;
                 }
                 if (oldTicket.Description != ticket.Description)
                 {
@@ -200,17 +210,8 @@ namespace dnorwoodBugTracker.Controllers
                     th.TicketId = ticket.Id;
                     db.TicketHistories.Add(th);
                     db.SaveChanges();
-                }
-                if (oldTicket.ProjectId != ticket.ProjectId)
-                {
-                    TicketHistory th = new TicketHistory();
-                    th.Property = "TICKET EDITED: PROJECT";
-                    th.OldValue = oldTicket.ProjectId.ToString();
-                    th.NewValue = ticket.ProjectId.ToString();
-                    th.AuthorId = User.Identity.GetUserId();
-                    th.TicketId = ticket.Id;
-                    db.TicketHistories.Add(th);
-                    db.SaveChanges();
+
+                    edited = true;
                 }
                 if (oldTicket.TicketTypeId != ticket.TicketTypeId)
                 {
@@ -222,6 +223,8 @@ namespace dnorwoodBugTracker.Controllers
                     th.TicketId = ticket.Id;
                     db.TicketHistories.Add(th);
                     db.SaveChanges();
+
+                    edited = true;
                 }
                 if (oldTicket.TicketPriorityId != ticket.TicketPriorityId)
                 {
@@ -233,6 +236,8 @@ namespace dnorwoodBugTracker.Controllers
                     th.TicketId = ticket.Id;
                     db.TicketHistories.Add(th);
                     db.SaveChanges();
+
+                    edited = true;
                 }
                 if (oldTicket.TicketStatusId != ticket.TicketStatusId)
                 {
@@ -244,8 +249,10 @@ namespace dnorwoodBugTracker.Controllers
                     th.TicketId = ticket.Id;
                     db.TicketHistories.Add(th);
                     db.SaveChanges();
+
+                    edited = true;
                 }
-                if (oldTicket.AssignToUserId != ticket.AssignToUserId)
+                if (oldTicket.AssignToUserId != null && oldTicket.AssignToUserId != ticket.AssignToUserId)
                 {
                     TicketHistory th = new TicketHistory();
                     th.Property = "TICKET EDITED: ASSIGNED";
@@ -255,11 +262,88 @@ namespace dnorwoodBugTracker.Controllers
                     th.TicketId = ticket.Id;
                     db.TicketHistories.Add(th);
                     db.SaveChanges();
+
+                    edited = true;
+                }
+
+                if (edited == true && ticket.AssignToUserId != null)
+                {
+                    IdentityMessage messageforNewDev = new IdentityMessage();
+
+                    var callbackUrl = Url.Action("Details", "Tickets", new { id = ticket.Id }, protocol: Request.Url.Scheme);
+
+                    messageforNewDev.Subject = "BugTracker Notifications";
+                    if (oldDev == null || oldDev.Id != ticket.AssignToUserId)
+                    {
+                        messageforNewDev.Body = $"You've been assigned to a new ticket { oldTicket.Title }. Please click <a href=\"" + callbackUrl + "\">here</a> to view it.";
+
+                        Notification n = new Notification();
+                        n.NotifyUserId = ticket.AssignToUserId;
+                        n.Created = DateTime.Now;
+                        n.TicketId = ticket.Id;
+                        n.Type = "ASSIGNMENT";
+                        n.Description = "You've been assigned to a new ticket.";
+                        db.Notifications.Add(n);
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        messageforNewDev.Body = $"Your ticket has been updated { oldTicket.Title }. Please click <a href=\"" + callbackUrl + "\">here</a> to view it.";
+
+                        Notification n = new Notification();
+                        n.NotifyUserId = ticket.AssignToUserId;
+                        n.Created = DateTime.Now;
+                        n.TicketId = ticket.Id;
+                        n.Type = "TICKET EDIT";
+                        n.Description = ticket.Title + " has been edited.";
+                        db.Notifications.Add(n);
+                        db.SaveChanges();
+                    }
+
+                    
+                    //Ticket oldTicket1 = db.Tickets.AsNoTracking().First(t => t.Comments == ticket.Comments);
+                    //ApplicationUser oldDev1 = oldTicket1.AssignToUser;
+
+                    //var callbackUrl1 = Url.Action("Details", "Tickets", new { comments = ticket.Id }, protocol: Request.Url.Scheme);
+
+                    //messageforNewDev.Subject = "BugTracker Notifications";
+                    //if (oldDev1 == null || oldDev1.Comments != ticket.Comments)
+                    //{
+                    //    messageforNewDev.Body = $"Your ticket has been updated { oldTicket.Title }. Please click <a href=\"" + callbackUrl + "\">here</a> to view it.";
+
+                    //    Notification n = new Notification();  
+                    //    n.NotifyUserId = ticket.AssignToUserId;
+                    //    n.Created = DateTime.Now;
+                    //    n.TicketId = ticket.Id;
+                    //    n.Type = "COMMENT NOTIFICATION";
+                    //    n.Description = ticket.Comments + " has been edited.";
+                    //    db.Notifications.Add(n);
+                    //    db.SaveChanges();
+                    //}
+                    //else
+                    //{
+                    //    messageforNewDev.Body = $"Your ticket has been updated { oldTicket.Title }. Please click <a href=\"" + callbackUrl + "\">here</a> to view it.";
+
+                    //    Notification n = new Notification();
+                    //    n.NotifyUserId = ticket.AssignToUserId;
+                    //    n.Created = DateTime.Now;
+                    //    n.TicketId = ticket.Id;
+                    //    n.Type = "TICKET COMMENT";
+                    //    n.Description = ticket.Comments + " has been edited.";
+                    //    db.Notifications.Add(n);
+                    //    db.SaveChanges();
+                    //}
+
+                    messageforNewDev.Destination = db.Users.Find(ticket.AssignToUserId).Email;
+                    EmailService email = new EmailService();
+                    await email.SendAsync(messageforNewDev);
+
                 }
 
                 db.Entry(ticket).State = EntityState.Modified;
                 ticket.Updated = DateTimeOffset.Now;
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 
@@ -267,7 +351,7 @@ namespace dnorwoodBugTracker.Controllers
             var developers = userRoleHelper.UserInRole("Developer");
             var devsOnProj = developers.Where(d => d.Projects.Any(p => p.Id == ticket.ProjectId));
 
-            ViewBag.AssignToUserId = new SelectList(devsOnProj, "Id", "FullName", ticket.AssignToUserId);
+            ViewBag.AssignToUserId = new SelectList(developers, "Id", "FullName", ticket.AssignToUserId);
             ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Title", ticket.ProjectId);
             ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "Id", "Name", ticket.TicketPriorityId);
             ViewBag.TicketStatusId = new SelectList(db.TicketStatuses, "Id", "Name", ticket.TicketStatusId);
@@ -301,7 +385,7 @@ namespace dnorwoodBugTracker.Controllers
                     db.TicketAttachments.Add(attachment);
 
                     ticketHistory.AuthorId = User.Identity.GetUserId();
-                    ticketHistory.Created = attachment.Created;
+                    ticketHistory.Created = DateTimeOffset.UtcNow;
                     ticketHistory.TicketId = ticket.Id;
                     ticketHistory.NewValue = attachment.FileUrl;
                     ticketHistory.Property = "NEW TICKET ATTACHMENT";
@@ -333,7 +417,7 @@ namespace dnorwoodBugTracker.Controllers
                 db.TicketComments.Add(ticketComment);
 
                 ticketHistory.AuthorId = User.Identity.GetUserId();
-                ticketHistory.Created = ticket.Created;
+                ticketHistory.Created = DateTimeOffset.UtcNow;
                 ticketHistory.TicketId = ticket.Id;
                 ticketHistory.NewValue = ticketComment.Body;
                 ticketHistory.Property = "NEW TICKET COMMENT";
@@ -374,7 +458,7 @@ namespace dnorwoodBugTracker.Controllers
             db.Tickets.Remove(ticket);
 
             ticketHistory.AuthorId = User.Identity.GetUserId();
-            ticketHistory.Created = ticket.Created;
+            ticketHistory.Created = DateTimeOffset.UtcNow;
             ticketHistory.TicketId = ticket.Id;
             ticketHistory.Property = "TICKET REMOVED";
             db.TicketHistories.Add(ticketHistory);  
@@ -412,7 +496,7 @@ namespace dnorwoodBugTracker.Controllers
 
          
             ticketHistory.AuthorId = User.Identity.GetUserId();
-            ticketHistory.Created = comments.Created;
+            ticketHistory.Created = DateTimeOffset.UtcNow;
             ticketHistory.TicketId = comments.TicketId;
             ticketHistory.Property = "COMMENT REMOVED";
             db.TicketHistories.Add(ticketHistory);
@@ -451,7 +535,7 @@ namespace dnorwoodBugTracker.Controllers
 
 
             ticketHistory.AuthorId = User.Identity.GetUserId();
-            ticketHistory.Created = attachments.Created;
+            ticketHistory.Created = DateTimeOffset.UtcNow;
             ticketHistory.TicketId = attachments.TicketId;
             ticketHistory.Property = "ATTACHMENT REMOVED";
             db.TicketHistories.Add(ticketHistory);
@@ -461,6 +545,25 @@ namespace dnorwoodBugTracker.Controllers
             return RedirectToAction("Details", new { id = attachments.TicketId });
         }
 
+
+        // GET: Tickets/Delete/5
+        public ActionResult DeleteNotification(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Notification notification = db.Notifications.Find(id);
+            Ticket ticket = db.Tickets.Find(notification.TicketId);
+            if (notification == null || ticket == null)
+            {
+                return HttpNotFound();
+            }
+
+            db.Notifications.Remove(notification);
+            db.SaveChanges();
+            return RedirectToAction("Details", new { id = ticket.Id });
+        }
 
         protected override void Dispose(bool disposing)
         {

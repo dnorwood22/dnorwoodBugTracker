@@ -206,6 +206,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminUserViewModels.cs" />
+    <Compile Include="Models\CodeFirst\Notification.cs" />
     <Compile Include="Models\CodeFirst\Project.cs" />
     <Compile Include="Models\CodeFirst\Ticket.cs" />
     <Compile Include="Models\CodeFirst\TicketAttachment.cs" />
@@ -230,6 +231,7 @@
     <Content Include="assets\blank.html" />
     <Content Include="assets\cards.html" />
     <Content Include="assets\charts.html" />
+    <Content Include="assets\css\BugTracker-Details.css" />
     <Content Include="assets\css\sb-admin.css" />
     <Content Include="assets\css\sb-admin.min.css" />
     <Content Include="assets\forgot-password.html" />
@@ -246,6 +248,8 @@
     <Content Include="assets\MultiSelect\MultiSelect.js" />
     <Content Include="assets\navbar.html" />
     <Content Include="assets\pics\dexlab.jpg" />
+    <Content Include="assets\pics\dexlab1.png" />
+    <Content Include="assets\pics\dexter video.gif" />
     <Content Include="assets\register.html" />
     <Content Include="assets\tables.html" />
     <Content Include="assets\vendor\bootstrap\css\bootstrap-grid.css" />
@@ -400,7 +404,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Landing.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />

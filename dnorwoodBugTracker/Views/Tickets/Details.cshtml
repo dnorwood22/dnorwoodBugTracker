@@ -4,172 +4,179 @@
     ViewBag.Title = "Details";
 }
 
-<h2>@Model.Title</h2>
 
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="~/assets/css/BugTracker-Details.css" rel="stylesheet" />
 
-<div class="container" style="padding: 10px">
-    <h4>Ticket</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Created)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Created)
-        </dd>
-        @*<dt>
-            @Html.DisplayNameFor(model => model.Updated)
-        </dt>
+<h3>Ticket Details</h3>
 
-        <dd>
-            @Html.DisplayFor(model => model.Updated)
-        </dd>*@
-        <dt>
-            Ticket Name
-            @*@Html.DisplayNameFor(model => model.Title)*@
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt>
-            Assignment
-            @*@Html.DisplayNameFor(model => model.AssignToUser.FullName)*@
-        </dt>
+    
 
-        <dd>
-            @Html.DisplayFor(model => model.AssignToUser.FullName)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Project.Title)
-        </dt>
+<div class="row" style="padding: 50px 50px 50px 50px;">
+    <div class="col-md-8">
+        <h4>Ticket</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Created)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Created)
+            </dd>
+            @*<dt>
+                    @Html.DisplayNameFor(model => model.Updated)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Project.Title)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Updated)
+                </dd>*@
+            <dt>
+                Ticket Name
+                @*@Html.DisplayNameFor(model => model.Title)*@
+            </dt>
 
-        <dt>
-            Type
-            @*@Html.DisplayNameFor(model => model.TicketType.Name)*@
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt>
+                Assignment
+                @*@Html.DisplayNameFor(model => model.AssignToUser.FullName)*@
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.TicketType.Name)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.AssignToUser.FullName)
+            </dd>
 
-        <dt>
-            Priority
-            @*@Html.DisplayNameFor(model => model.TicketPriority.Name)*@
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Project.Title)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.TicketPriority.Name)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Project.Title)
+            </dd>
 
-        <dt>
-            Status
-            @*@Html.DisplayNameFor(model => model.TicketStatus.Name)*@
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.TicketStatus.Name)
-        </dd>
+            <dt>
+                Type
+                @*@Html.DisplayNameFor(model => model.TicketType.Name)*@
+            </dt>
 
-        @*<dt>
-            @Html.DisplayNameFor(model => model.OwnerUserId)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.TicketType.Name)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.OwnerUserId)
-        </dd>*@
+            <dt>
+                Priority
+                @*@Html.DisplayNameFor(model => model.TicketPriority.Name)*@
+            </dt>
 
-    </dl>
+            <dd>
+                @Html.DisplayFor(model => model.TicketPriority.Name)
+            </dd>
 
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
+            <dt>
+                Status
+                @*@Html.DisplayNameFor(model => model.TicketStatus.Name)*@
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.TicketStatus.Name)
+            </dd>
 
-    @using (Html.BeginForm("AddAttachments", "Tickets", FormMethod.Post, new { @class = "ticket-ticketAttachment", enctype = "multipart/form-data" }))
-    {
-        @Html.AntiForgeryToken()
+            @*<dt>
+                    @Html.DisplayNameFor(model => model.OwnerUserId)
+                </dt>
 
-        <input type="file" name="files" multiple required />
-        <input type="hidden" name="ticketId" value="@Model.Id" hidden />
-        <button style="font-size:24px; background-color:aqua" type="submit">Attach<i class="material-icons">attachment</i></button>
-    }
+                <dd>
+                    @Html.DisplayFor(model => model.OwnerUserId)
+                </dd>*@
 
-    @foreach (var attachment in Model.Attachments)
-    {
-        <a href="/TicketAttachments/@attachment.FileUrl" target="_blank">@attachment.FileUrl</a><br />
+        </dl>
+
         <p>
             @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-            @Html.ActionLink("Delete", "AttachmentDelete", "Tickets", new { id = attachment.Id }, null) |
+            @Html.ActionLink("Back to List", "Index")
         </p>
-    }
-
-
-    <!-- comments -->
-    <div class="row">
-        <!-- comment adding -->
-        <div class="col-md-12">
-            <h4>Post your comment</h4>
-            @using (Html.BeginForm("AddComments", "Tickets", FormMethod.Post, new { @class = "ticket-ticketComment" }))
-            {
-                @Html.AntiForgeryToken()
-                <input type="hidden" name="TicketId" value="@Model.Id" hidden />
-                    <span class="input">
-                        <textarea class="form-control" rows="2" id="comment" name="Body" required></textarea>
-                        <label class="input-label" for="input-message">
-                            <span class="input-label-content"></span>
-                        </label>
-                    </span>
-                    <br />
-                    <button style="font-size:24px;background-color:crimson" type="submit">Publish comment<i class="fa fa-comments-o"></i></button>
-            }
-        </div><!-- /comment adding -->
-    </div><!-- /comments -->
-    <div class="row">
-        <div class="col-lg-12">
-            <h2>Comments</h2>
-            <div>
-                @foreach (var comment in Model.Comments)
-                {
-                    <div>
-                        @comment.Author.FullName on @comment.Created
-                    </div>
-                        <div>
-                            @comment.Body
-                        </div>
-
-                        <p>
-                            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-                            @Html.ActionLink("Delete", "CommentDelete", "Tickets", new { id = comment.Id }, null) |
-                        </p>
-
-                }
-            </div>
-            @if (Model.Comments.Count == 0)
-            {
-                <div class="col-xs-12 col-md-8">
-                    <ul class="comments empty"></ul>
-                </div>
-            }
-        </div>
     </div>
-
 </div>
+        @using (Html.BeginForm("AddAttachments", "Tickets", FormMethod.Post, new { @class = "ticket-ticketAttachment", enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <input type="file" name="files" multiple required />
+            <input type="hidden" name="ticketId" value="@Model.Id" hidden />
+            <button style="font-size:24px; background-color:aqua" type="submit">Attach<i class="material-icons">attachment</i></button>
+        }
+
+        @foreach (var attachment in Model.Attachments)
+        {
+            <a href="/TicketAttachments/@attachment.FileUrl" target="_blank">@attachment.FileUrl</a><br />
+            <p>
+                @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+                @Html.ActionLink("Delete", "AttachmentDelete", "Tickets", new { id = attachment.Id }, null) |
+            </p>
+        }
+
+
+        <!-- comments -->
+        <div class="row">
+            <!-- comment adding -->
+            <div class="col-md-12">
+                <h4>Post your comment</h4>
+                @using (Html.BeginForm("AddComments", "Tickets", FormMethod.Post, new { @class = "ticket-ticketComment" }))
+            {
+                    @Html.AntiForgeryToken()
+                    
+                            <input type="hidden" name="TicketId" value="@Model.Id" hidden />
+                            <span class="input">
+                                <textarea class="form-control" rows="2" id="comment" name="Body" required></textarea>
+                                <label class="input-label" for="input-message">
+                                    <span class="input-label-content"></span>
+                                </label>
+                            </span>
+                        <br />
+                        <button style="font-size:24px;background-color:crimson" type="submit">Publish comment<i class="fa fa-comments-o"></i></button>
+                        }
+                    </div><!-- /comment adding -->
+        </div><!-- /comments -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Comments</h2>
+                <div>
+                    @foreach (var comment in Model.Comments)
+                    {
+                        <div>
+                            <div>
+                                @comment.Author.FullName on @comment.Created
+                            </div>
+                            <div>
+                                @comment.Body
+                            </div>
+                        </div>
+                                <p>
+                                    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+                                    @Html.ActionLink("Delete", "CommentDelete", "Tickets", new { id = comment.Id }, null) |
+                                </p>
+
+                     }
+                            </div>
+                            @if (Model.Comments.Count == 0)
+                            {
+                                <div class="col-xs-12 col-md-8">
+                                    <ul class="comments empty"></ul>
+                                </div>
+                            }
+                        </div>
+        </div>
+        
+    
 @*<p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Delete", "CommentDelete", "Ticket", new { id = Model.Id}) |
@@ -185,115 +192,218 @@
     {
         if (history.Property == "NEW TICKET COMMENT")
         {
-            <div>
-                <p>
-                    <span style="font-weight: 600">@history.Property</span> - @history.Author.FullName <br />
-                    @history.Created<br />
-                    <em>"@history.NewValue"</em>
-                </p>
-            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div id="tb-testimonial" class="testimonial testimonial-default-filled">
+                        <div class="testimonial-section">
+                            <span style="font-weight: 600">@history.Property</span>
+                            <em>"@history.NewValue"</em>
+                        </div>
+                        <div class="testimonial-desc">
+                            <img src="~/assets/pics/dexlab.jpg" alt="" />
+                            <div class="testimonial-writer">
+                                <div class="testimonial-writer-name">@history.Author.FullName </div>
+                                <div class="testimonial-writer-designation">@history.Created</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             </div>
+
         }
         else if (history.Property == "NEW TICKET ATTACHMENT")
         {
-            <div>
-                <p>
-                    <span style="font-weight: 600">@history.Property</span> - @history.Author.FullName <br />
-                    @history.Created<br />
-                    <a href="/TicketAttachments/@history.NewValue">@history.NewValue</a>
-                </p>
+            <div class="col-sm-6">
+                <div id="tb-testimonial" class="testimonial testimonial-primary-filled">
+                    <div class="testimonial-section">
+                        <span style="font-weight: 600">@history.Property</span>
+                        <a href="/TicketAttachments/@history.NewValue">@history.NewValue</a>
+                    </div>
+                    <div class="testimonial-desc">
+                        <img src="~/assets/pics/dexlab1.png" alt="" />
+                        <div class="testimonial-writer">
+                            <div class="testimonial-writer-name">@history.Author.FullName</div>
+                            <div class="testimonial-writer-designation">@history.Created</div>  
+                        </div>
+                    </div>
+                </div>
             </div>
+
         }
         else if (history.Property == "COMMENT REMOVED")
         {
-            <div>
-                <p>
-                    <span style="font-weight: 600">@history.Property</span> - @history.Author.FullName <br />
-                    @history.Created<br />
-                </p>
+            <div class="col-sm-6">
+                <div id="tb-testimonial" class="testimonial testimonial-info-filled">
+                    <div class="testimonial-section">
+                        <span style="font-weight: 600">@history.Property</span>
+                        <em>"Comment Was Removed"</em>
+                    </div>
+                    <div class="testimonial-desc">
+                        <img src="~/assets/pics/dexlab.jpg" alt="" />
+                        <div class="testimonial-writer">
+                            <div class="testimonial-writer-name">@history.Author.FullName</div>
+                            <div class="testimonial-writer-designation">@history.Created</div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
         }
         else if (history.Property == "NEW TICKET CREATED")
         {
-            <div>
-                <p>
-                    <span style="font-weight: 600">@history.Property</span> - @history.Author.FullName <br />
-                    @history.Created<br />
-                </p>
+            <div class="col-sm-6">
+                <div id="tb-testimonial" class="testimonial testimonial-success-filled">
+                    <div class="testimonial-section">
+                        <span style="font-weight: 600">@history.Property</span>
+                        <em>"A new ticket was created"</em>
+                    </div>
+                    <div class="testimonial-desc">
+                        <img src="~/assets/pics/dexlab1.png" alt="" />
+                        <div class="testimonial-writer">
+                            <div class="testimonial-writer-name">@history.Author.FullName</div>
+                            <div class="testimonial-writer-designation">@history.Created</div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
         }
         else if (history.Property == "ATTACHMENT REMOVED")
         {
-            <div>
-                <p>
-                    <span style="font-weight: 600">@history.Property</span> - @history.Author.FullName <br />
-                    @history.Created<br />
-                </p>
+            <div class="col-sm-6">
+                <div id="tb-testimonial" class="testimonial testimonial-warning-filled">
+                    <div class="testimonial-section">
+                        <span style="font-weight: 600">@history.Property</span>
+                        <em>"Attachment was removed"</em>
+                    </div>
+                    <div class="testimonial-desc">
+                        <img src="~/assets/pics/dexlab.jpg" alt="" />
+                        <div class="testimonial-writer">
+                            <div class="testimonial-writer-name">@history.Author.FullName </div>
+                            <div class="testimonial-writer-designation">@history.Created</div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
         }
         else if (history.Property == "TICKET EDITED: TITLE")
         {
-            <div>
-                <p>
-                    <span style="font-weight: 600">@history.Property</span> - @history.Author.FullName <br />
-                    @history.Created<br />
-                </p>
+            <div class="col-sm-6">
+                <div id="tb-testimonial" class="testimonial testimonial-danger-filled">
+                    <div class="testimonial-section">
+                        <span style="font-weight: 600">@history.Property</span>
+                        <em>"@history.NewValue"</em>
+                    </div>
+                    <div class="testimonial-desc">
+                        <img src="~/assets/pics/dexlab1.png" alt="" />
+                        <div class="testimonial-writer">
+                            <div class="testimonial-writer-name">@history.Author.FullName</div>
+                            <div class="testimonial-writer-designation">@history.Created</div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
         }
         else if (history.Property == "TICKET EDITED: DESCRIPTION")
         {
-            <div>
-                <p>
-                    <span style="font-weight: 600">@history.Property</span> - @history.Author.FullName <br />
-                    @history.Created<br />
-                </p>
-            </div>
-        }
-        else if (history.Property == "TICKET EDITED: PROJECT")
-        {
-            <div>
-                <p>
-                    <span style="font-weight: 600">@history.Property</span> - @history.Author.FullName <br />
-                    @history.Created<br />
-                </p>
-            </div>
+            
+                <div class="col-sm-6">
+                    <div id="tb-testimonial" class="testimonial testimonial-default">
+                        <div class="testimonial-section">
+                            <span style="font-weight: 600">@history.Property</span>
+                            <em>"@history.NewValue"</em>
+                        </div>
+                        <div class="testimonial-desc">
+                            <img src="~/assets/pics/dexlab1.png" alt="" />
+                            <div class="testimonial-writer">
+                                <div class="testimonial-writer-name">@history.Author.FullName</div>
+                                <div class="testimonial-writer-designation">@history.Created</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
         }
         else if (history.Property == "TICKET EDITED: TYPE")
         {
-            <div>
-                <p>
-                    <span style="font-weight: 600">@history.Property</span> - @history.Author.FullName <br />
-                    @history.Created<br />
-                </p>
+            <div class="col-sm-6">
+                <div id="tb-testimonial" class="testimonial testimonial-primary">
+                    <div class="testimonial-section">
+                        <span style="font-weight: 600">@history.Property</span> 
+                        <em>"Ticket type has been updated"</em>
+                    </div>
+                    <div class="testimonial-desc">
+                        <img src="~/assets/pics/dexlab.jpg" alt="" />
+                        <div class="testimonial-writer">
+                            <div class="testimonial-writer-name">@history.Author.FullName</div>
+                            <div class="testimonial-writer-designation">@history.Created</div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
         }
         else if (history.Property == "TICKET EDITED: PRIORITY")
         {
-            <div>
-                <p>
-                    <span style="font-weight: 600">@history.Property</span> - @history.Author.FullName <br />
-                    @history.Created<br />
-                </p>
+            <div class="col-sm-6">
+                <div id="tb-testimonial" class="testimonial testimonial-info">
+                    <div class="testimonial-section">
+                        <span style="font-weight: 600">@history.Property</span> 
+                        <em>"Ticket priority has been updated"</em>
+                    </div>
+                    <div class="testimonial-desc">
+                        <img src="~/assets/pics/dexlab1.png" alt="" />
+                        <div class="testimonial-writer">
+                            <div class="testimonial-writer-name">@history.Author.FullName</div>
+                            <div class="testimonial-writer-designation">@history.Created</div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
         }
         else if (history.Property == "TICKET EDITED: STATUS")
         {
-            <div>
-                <p>
-                    <span style="font-weight: 600">@history.Property</span> - @history.Author.FullName <br />
-                    @history.Created<br />
-                </p>
+            <div class="col-sm-6">
+                <div id="tb-testimonial" class="testimonial testimonial-success">
+                    <div class="testimonial-section">
+                        <span style="font-weight: 600">@history.Property</span>
+                        <em>"Ticket status has been updated"</em>
+                    </div>
+                    <div class="testimonial-desc">
+                        <img src="~/assets/pics/dexlab.jpg" alt="" />
+                        <div class="testimonial-writer">
+                            <div class="testimonial-writer-name">@history.Author.FullName</div>
+                            <div class="testimonial-writer-designation">@history.Created</div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
         }
         else if (history.Property == "TICKET EDITED: ASSIGNED")
         {
-            <div>
-                <p>
-                    <span style="font-weight: 600">@history.Property</span> - @history.Author.FullName <br />
-                    @history.Created<br />
-                </p>
+            <div class="col-sm-6">
+                <div id="tb-testimonial" class="testimonial testimonial-warning">
+                    <div class="testimonial-section">
+                        <span style="font-weight: 600">@history.Property</span>
+                        <em>"Ticket has been assigned."</em>
+                    </div>
+                    <div class="testimonial-desc">
+                        <img src="~/assets/pics/dexlab1.png" alt="" />
+                        <div class="testimonial-writer">
+                            <div class="testimonial-writer-name">@history.Author.FullName</div>
+                            <div class="testimonial-writer-designation">@history.Created</div>
+                        </div>
+                    </div>
+                </div>
             </div>
+      
         }
-        <hr/>
-       
-    }
-}
+        <hr />
+
+        }
+        }
