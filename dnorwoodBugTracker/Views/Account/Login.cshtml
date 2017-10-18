@@ -40,7 +40,7 @@
         border-radius: 4px;
         background-color: #f4511e;
         border: none;
-        color: #FFFFFF;
+        color: white;
         text-align: center;
         font-size: 15px;
         padding: 10px;
@@ -115,6 +115,7 @@
     body {
         background-image: url('../../assets/pics/dexter video.gif');
     }
+    
 </style>
 <body>
     <h2>@ViewBag.Title.</h2>
@@ -154,11 +155,44 @@
                                     </div>
                                     <div class="col-md-6" style="text-align: right">
                                         @*Enable this once you have account confirmation enabled for password reset functionality*@
-                                        <button class="button"><span>@Html.ActionLink("Forgot your password?", "ForgotPassword")</span></button>
+                                        <button class="button" style="background-color: crimson"><span>@Html.ActionLink("Forgot your password?", "ForgotPassword")</span></button>
                                     </div>
                                 </div>
                             </div>
                         </form>
+                        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input name="Email" value="dnorwood22@gmail.com" hidden />
+                                    <input name="Password" value="Password1!" hidden />
+
+                                    <input type="submit" class="button" style="background-color: seagreen" value="Admin Demo" />
+                        }
+                        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input name="Email" value="ProjectDemo@gmail.com" hidden />
+                                    <input name="Password" value="Password1!" hidden />
+
+                                    <input type="submit" class="button" style="background-color: darkturquoise" value="Project Manager Demo" />
+                        }
+                        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input name="Email" value="Developer@gmail.com" hidden />
+                                    <input name="Password" value="Password1!" hidden />
+
+                                    <input type="submit" class="button" style="background-color: coral" value="Developer Demo" />
+                        }
+                        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input name="Email" value="Submitter@gmail.com" hidden />
+                                    <input name="Password" value="Password1!" hidden />
+
+                                    <input type="submit" class="button" style="background-color: palevioletred" value="Submitter Demo" />
+                        }
+
                     </div>
                 }
             </section>

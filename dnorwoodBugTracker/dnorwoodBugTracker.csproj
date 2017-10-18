@@ -446,6 +446,7 @@
     <Content Include="Scripts\jquery-3.2.1.min.map" />
     <Content Include="Views\Tickets\CommentDelete.cshtml" />
     <Content Include="Views\Tickets\AttachmentDelete.cshtml" />
+    <Content Include="Views\Tickets\CommentEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

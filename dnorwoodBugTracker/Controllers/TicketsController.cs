@@ -300,18 +300,11 @@ namespace dnorwoodBugTracker.Controllers
                         db.SaveChanges();
                     }
 
-                    
-                    //Ticket oldTicket1 = db.Tickets.AsNoTracking().First(t => t.Comments == ticket.Comments);
-                    //ApplicationUser oldDev1 = oldTicket1.AssignToUser;
-
-                    //var callbackUrl1 = Url.Action("Details", "Tickets", new { comments = ticket.Id }, protocol: Request.Url.Scheme);
-
-                    //messageforNewDev.Subject = "BugTracker Notifications";
-                    //if (oldDev1 == null || oldDev1.Comments != ticket.Comments)
+                    //if (oldDev == null || oldDev.Comments != ticket.Comments)
                     //{
                     //    messageforNewDev.Body = $"Your ticket has been updated { oldTicket.Title }. Please click <a href=\"" + callbackUrl + "\">here</a> to view it.";
 
-                    //    Notification n = new Notification();  
+                    //    Notification n = new Notification();
                     //    n.NotifyUserId = ticket.AssignToUserId;
                     //    n.Created = DateTime.Now;
                     //    n.TicketId = ticket.Id;

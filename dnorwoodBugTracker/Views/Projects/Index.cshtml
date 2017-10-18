@@ -1,4 +1,5 @@
-﻿<div class="container-fluid">
+﻿@model IEnumerable<dnorwoodBugTracker.Models.CodeFirst.Project>
+<div class="container-fluid">
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
@@ -45,7 +46,7 @@
                         {
                         <tr>
                             <td>
-                                @(item.Created)
+                                @Html.ToUserTime(item.Created, ViewBag.UserTimeZone as string, "MM/dd/yyyy h:mm:ss tt")
                             </td>
                             <td>
                                 @(item.Title)
@@ -60,15 +61,6 @@
                                 @foreach (var user in item.Users)
                                 {
                                     @user.FullName<br />
-                                }
-                            </td>
-                            <td>
-                                @Html.ToUserTime(item.Created, ViewBag.UserTimeZone as string, "MM/dd/yyyy h:mm:ss tt")
-                            </td>
-                            <td>
-                                @if (item.Updated != null)
-                                {
-                                    @Html.ToUserTime(item.Updated.Value, ViewBag.UserTimeZone as string, "MM/dd/yyyy h:mm:ss tt")
                                 }
                             </td>
 

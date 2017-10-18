@@ -1,0 +1,48 @@
+﻿@model dnorwoodBugTracker.Models.CodeFirst.TicketComment
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Edit</h2>
+
+<div>
+    <h4>Ticket Comment</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Author
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Author.FullName)
+        </dd>
+
+        <dt>
+            Created
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Created)
+        </dd>
+
+        <dt>
+            Body
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Body)
+        </dd>
+
+    </dl>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+    }
+</div>
