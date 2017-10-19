@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<dnorwoodBugTracker.Models.CodeFirst.Project>
+
 <div class="container-fluid">
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
@@ -68,7 +69,6 @@
                                 @if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
 
                                 {
-                                    
                                     @Html.ActionLink("Assigned Roles", "Index", "Admin")<br />
                                     @Html.ActionLink("Assigned Users", "ProjectAssign", new { id = item.Id })<br />
                                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }) <br />
@@ -83,7 +83,6 @@
                 </table>
             </div>
         </div>
-        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
     </div>
 </div>
 

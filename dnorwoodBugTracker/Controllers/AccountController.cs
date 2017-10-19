@@ -172,6 +172,8 @@ namespace dnorwoodBugTracker.Controllers
                 AddErrors(result);
             }
 
+            var timezones = TimeZoneInfo.GetSystemTimeZones();
+            var defaulttimezone = TimeZoneInfo.FindSystemTimeZoneById("US Eastern Standard Time");
             // If we got this far, something failed, redisplay form
             return View(model);
         }

@@ -447,6 +447,7 @@
     <Content Include="Views\Tickets\CommentDelete.cshtml" />
     <Content Include="Views\Tickets\AttachmentDelete.cshtml" />
     <Content Include="Views\Tickets\CommentEdit.cshtml" />
+    <Content Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

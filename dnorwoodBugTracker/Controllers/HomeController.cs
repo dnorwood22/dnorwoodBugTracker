@@ -17,7 +17,7 @@ namespace dnorwoodBugTracker.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return View(db.Projects.ToList());
         }
 
         public ActionResult About()

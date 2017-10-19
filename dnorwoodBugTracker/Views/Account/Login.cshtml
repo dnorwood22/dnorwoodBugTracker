@@ -1,213 +1,89 @@
 ﻿@using dnorwoodBugTracker.Models
 @model LoginViewModel
 
-@{
-    Layout = null;
+@{ 
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
 }
 
-
-
-<style>
-    form {
-        border: 3px solid #f1f1f1;
-        padding: 10px 20px 10px 20px;
-    }
-
-    input[type=text], input[type=password] {
-        width: 100%;
-        padding: 12px 20px;
-        margin: 8px 0;
-        display: inline-block;
-        border: 1px solid #ccc;
-        box-sizing: border-box;
-    }
-   
-    button:hover {
-        opacity: 0.8;
-    }
-
-    .imgcontainer {
-        text-align: center;
-        margin: 24px 0 12px 0;
-        padding: -10px;
-    }
-
-    img.avatar {
-        width: 40%;
-        border-radius: 50%;
-    }
-    .button {
-        border-radius: 4px;
-        background-color: #f4511e;
-        border: none;
-        color: white;
-        text-align: center;
-        font-size: 15px;
-        padding: 10px;
-        width: 200px;
-        transition: all 0.5s;
-        cursor: pointer;
-        margin: 5px;
-    }
-
-        .button span {
-            cursor: pointer;
-            display: inline-block;
-            position: relative;
-            transition: 0.5s;
-        }
-
-            .button span:after {
-                content: '\00bb';
-                position: absolute;
-                opacity: 0;
-                top: 0;
-                right: -20px;
-                transition: 0.5s;
-            }
-
-        .button:hover span {
-            padding-right: 25px;
-        }
-
-            .button:hover span:after {
-                opacity: 1;
-                right: 0;
-            }
-    .button1 {
-        display: inline-block;
-        padding: 15px 15px;
-        font-size: 20px;
-        cursor: pointer;
-        text-align: center;
-        text-decoration: none;
-        outline: none;
-        color: #fff;
-        background-color: #4CAF50;
-        border: none;
-        border-radius: 15px;
-        box-shadow: 0 9px #999;
-    }
-
-        .button1:hover {
-            background-color: #3e8e41
-        }
-
-        .button1:active {
-            background-color: #3e8e41;
-            box-shadow: 0 5px #666;
-            transform: translateY(4px);
-        }
-    .button2 {
-        background-color: white;
-        color: black;
-        border: 2px solid #008CBA;
-        border-radius: 8px;
-    }
-
-        .button2:hover {
-            background-color: #008CBA;
-            color: white;
-        }
-        .loginbox{
-            padding: 75px;
-        }
-    body {
-        background-image: url('../../assets/pics/dexter video.gif');
-    }
-    
-</style>
-<body>
-    <h2>@ViewBag.Title.</h2>
-    <div class="row" style="padding: 340px;">
-        <div class="col-md-8" style="background-color: blueviolet">
-            <section id="loginForm">
-                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                    @Html.AntiForgeryToken()
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <center><h3>Use a local account to log in.</h3></center>
-                    <hr />
-                    <div style="padding: 75px" class="loginbox center-block">
-                        <form action="/action_page.php">
-                            <div class="imgcontainer">
-                                <img src="~/assets/pics/dexlab.jpg" alt="Avatar" class="avatar">
-                            </div>
-                            <div class="form-horizontal">
-                                <div class="form-group">
-                                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                                    <div class="col-md-10">
-                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                                    <div class="col-md-10">
-                                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-2"></div>
-                                    <div class="col-md-4">
-                                        <input type="submit" value="Log in" class="button1" />
-                                    </div>
-                                    <div class="col-md-6" style="text-align: right">
-                                        @*Enable this once you have account confirmation enabled for password reset functionality*@
-                                        <button class="button" style="background-color: crimson"><span>@Html.ActionLink("Forgot your password?", "ForgotPassword")</span></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
-                        {
-                            @Html.AntiForgeryToken()
-                            <input name="Email" value="dnorwood22@gmail.com" hidden />
-                                    <input name="Password" value="Password1!" hidden />
-
-                                    <input type="submit" class="button" style="background-color: seagreen" value="Admin Demo" />
-                        }
-                        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
-                        {
-                            @Html.AntiForgeryToken()
-                            <input name="Email" value="ProjectDemo@gmail.com" hidden />
-                                    <input name="Password" value="Password1!" hidden />
-
-                                    <input type="submit" class="button" style="background-color: darkturquoise" value="Project Manager Demo" />
-                        }
-                        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
-                        {
-                            @Html.AntiForgeryToken()
-                            <input name="Email" value="Developer@gmail.com" hidden />
-                                    <input name="Password" value="Password1!" hidden />
-
-                                    <input type="submit" class="button" style="background-color: coral" value="Developer Demo" />
-                        }
-                        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
-                        {
-                            @Html.AntiForgeryToken()
-                            <input name="Email" value="Submitter@gmail.com" hidden />
-                                    <input name="Password" value="Password1!" hidden />
-
-                                    <input type="submit" class="button" style="background-color: palevioletred" value="Submitter Demo" />
-                        }
-
-                    </div>
-                }
-            </section>
-            <hr />
-            <div class="col-md-offset-2">
-                <p>Don't have an account? <a href="@Url.Action("Register")" class="pull-right button2">Register Here</a></p>
+@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <center><h3>Use a local account to log in.</h3></center>
+    <hr />
+    <div style="padding: 75px" class="loginbox center-block">
+        <div class="imgcontainer">
+            <img src="~/assets/pics/dexlab.jpg" alt="Avatar" class="avatar">
+        </div>
+        <div class="form-horizontal">
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-2"></div>
+                <div class="col-md-4">
+                    <input type="submit" value="Log in" class="button1" />
+                </div>
+                <div class="col-md-6" style="text-align: right">
+                    @*Enable this once you have account confirmation enabled for password reset functionality*@
+                    <button class="button" style="background-color: crimson"><span>@Html.ActionLink("Forgot your password?", "ForgotPassword")</span></button>
+                </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <section id="socialLoginForm">
-                @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-            </section>
-        </div>
     </div>
-</body>
+}
+@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <input name="Email" value="dnorwood22@gmail.com" hidden />
+    <input name="Password" value="Password1!" hidden />
+
+    <input type="submit" class="button" style="background-color: darkturquoise;" value="Admin Demo" />
+}
+@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <input name="Email" value="ProjectDemo@gmail.com" hidden />
+    <input name="Password" value="Password1!" hidden />
+
+    <input type="submit" class="button" style="background-color: seagreen" value="Project Manager Demo" />
+}
+@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <input name="Email" value="Developer@gmail.com" hidden />
+    <input name="Password" value="Password1!" hidden />
+
+    <input type="submit" class="button" style="background-color: coral" value="Developer Demo" />
+}
+@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <input name="Email" value="Submitter@gmail.com" hidden />
+    <input name="Password" value="Password1!" hidden />
+
+    <input type="submit" class="button" style="background-color: palevioletred" value="Submitter Demo" />
+}
+<div class="col-md-offset-2">
+    <p>Don't have an account? <a href="@Url.Action("Register")" class="pull-right button2">Register Here</a></p>
+</div>
+<div class="col-md-4">
+    <section id="socialLoginForm">
+        @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+    </section>
+</div>
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

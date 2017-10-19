@@ -53,7 +53,8 @@
                                     @(Html.DisplayFor(modelItem => item.Project.Title))
                                 </td>
                                 <td>
-                                    @Html.ToUserTime(item.Created, ViewBag.UserTimeZone as string, "MM/dd/yyyy h:mm:ss tt")
+                                        @Html.ToUserTime(item.Created, ViewBag.UserTimeZone as string, "MM/dd/yyyy h:mm:ss tt")
+                                    
                                 </td>
                                 <td>
                                    @(Html.DisplayFor(modelItem => item.OwnerUser.FullName))
@@ -89,7 +90,6 @@
                 </table>
             </div>
         </div>
-        <div class="card-footer small text-muted">Updated</div>
     </div>
 </div>
 

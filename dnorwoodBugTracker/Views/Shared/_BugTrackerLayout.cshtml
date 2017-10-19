@@ -33,12 +33,12 @@
                         <span class="nav-link-text">Dashboard</span>
                     </a>
                 </li>*@
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+                @*<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
                     <a class="nav-link" href="@Url.Action("Charts", "Home")">
                         <i class="fa fa-fw fa-area-chart"></i>
                         <span class="nav-link-text">Charts</span>
                     </a>
-                </li>
+                </li>*@
                 @*<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
                     <a class="nav-link" href="tables.html">
                         <i class="fa fa-fw fa-table"></i>
@@ -69,7 +69,11 @@
                             <a href="@Url.Action("Login","Account")">Login</a>
                         </li>
                         <li>
-                            <a href="@Url.Action("Index","Admin")">Users</a>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a href="@Url.Action("Index","Admin")" class="fa fa-key">Admin</a>
+                            }
+                            
                         </li>
                         <li>
                             <a href="@Url.Action("Index","Tickets")">Tickets</a>
@@ -115,12 +119,12 @@
                         </li>
                     </ul>
                 </li>*@
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Link">
+                @*<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Link">
                     <a class="nav-link" href="#">
                         <i class="fa fa-fw fa-link"></i>
                         <span class="nav-link-text">Link</span>
                     </a>
-                </li>
+                </li>*@
             </ul>
             <ul class="navbar-nav sidenav-toggler">
                 <li class="nav-item">
@@ -292,7 +296,7 @@
         <script src="~/assets/js/sb-admin-datatables.min.js"></script>
         <script src="~/assets/js/sb-admin-charts.min.js"></script>
 
-@RenderSection("scripts", required: false)
+        @RenderSection("scripts", required: false)
     </div> 
 </body>
 </html>
