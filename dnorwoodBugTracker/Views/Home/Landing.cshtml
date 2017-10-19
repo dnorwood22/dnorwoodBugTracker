@@ -5,7 +5,7 @@
 <head>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
+    
     <style>
         
         body {
@@ -50,12 +50,47 @@
                     opacity: 1;
                     right: 0;
                 }
-
+                .pic{
+                    max-width: 150px;
+                    margin-right: 5px;
+                    margin-left: 5px;
+                    padding: 10px;
+                    display: inline-block;
+                    text-align: center;
+                }
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: transparent;
+            color: white;
+            text-align: center;
+        }
     </style>
 </head>
 <center>
-        <div style="padding: 200px";>
-            <button class="button" style="vertical-align:middle"><span>@Html.ActionLink("BugTracker", "Index", "Home")</span>           
+        <div style="padding-top: 200px; padding-left: 200px; padding-right: 200px; padding-bottom: 40px"; >
+            <button class="button" style="vertical-align:middle"><span>@Html.ActionLink("BugTracker", "Login", "Account")</span>           
             </button>
         </div>
 </center>
+
+<div style="text-align: center; color: white">
+    <h1>Created with:</h1>
+</div>
+
+<center>
+    <div style="margin-right: 0px; margin-left: 0px">
+        <img src="~/assets/pics/html5css3JS.jpg" class="pic" />
+        <img src="~/assets/pics/SQL.jpg" class="pic" />
+        <img src="~/assets/pics/visual_studio.jpg" class="pic" />
+    </div>
+</center>
+
+
+    <div class="footer">
+        <div class="text-center">
+            <small>© Dexter Norwood | Bug Tracker</small>
+        </div>
+    </div>

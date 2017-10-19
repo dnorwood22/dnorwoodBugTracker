@@ -5,6 +5,18 @@
     Layout = "~/Views/Shared/_LoginLayout.cshtml";
 }
 
+<style>
+    .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: transparent;
+        color: white;
+        text-align: center;
+    }
+</style>
+
 @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
@@ -82,6 +94,12 @@
     <section id="socialLoginForm">
         @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
     </section>
+</div>
+
+<div class="footer">
+    <div class="text-center">
+        <small>© Dexter Norwood | Bug Tracker</small>
+    </div>
 </div>
 
 @section Scripts {
