@@ -17,6 +17,9 @@ namespace dnorwoodBugTracker.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.AssignedTk = db.Tickets.Where(t => t.TicketStatus.Name == "Assigned").Count();
+            ViewBag.UnassignedTk = db.Tickets.Where(t => t.TicketStatus.Name == "Unassigned").Count();
+            ViewBag.CompleteTk = db.Tickets.Where(t => t.TicketStatus.Name == "Complete").Count();
             return View(db.Projects.ToList());
         }
 

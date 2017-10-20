@@ -174,6 +174,7 @@ namespace dnorwoodBugTracker.Controllers
 
             var timezones = TimeZoneInfo.GetSystemTimeZones();
             var defaulttimezone = TimeZoneInfo.FindSystemTimeZoneById("US Eastern Standard Time");
+            ViewBag.TimeZone = new SelectList(timezones, "Id", "Id", defaulttimezone);
             // If we got this far, something failed, redisplay form
             return View(model);
         }

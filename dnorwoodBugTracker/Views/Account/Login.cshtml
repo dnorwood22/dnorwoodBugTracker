@@ -42,8 +42,8 @@
                     @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="form-group">
-                <div class="col-md-2"></div>
+            <div class="form-group row">
+
                 <div class="col-md-4">
                     <input type="submit" value="Log in" class="button1" />
                 </div>
@@ -55,47 +55,51 @@
         </div>
     </div>
 }
-@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
-{
-    @Html.AntiForgeryToken()
-    <input name="Email" value="dnorwood22@gmail.com" hidden />
-    <input name="Password" value="Password1!" hidden />
+<div style="text-align: center">
+    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <input name="Email" value="dnorwood22@gmail.com" hidden />
+        <input name="Password" value="Password1!" hidden />
 
-    <input type="submit" class="button" style="background-color: darkturquoise;" value="Admin Demo" />
-}
-@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
-{
-    @Html.AntiForgeryToken()
-    <input name="Email" value="ProjectDemo@gmail.com" hidden />
-    <input name="Password" value="Password1!" hidden />
+        <input type="submit" class="button" style="background-color: darkturquoise;" value="Admin Demo" />
+    }
+    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <input name="Email" value="ProjectDemo@gmail.com" hidden />
+        <input name="Password" value="Password1!" hidden />
 
-    <input type="submit" class="button" style="background-color: seagreen" value="Project Manager Demo" />
-}
-@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
-{
-    @Html.AntiForgeryToken()
-    <input name="Email" value="Developer@gmail.com" hidden />
-    <input name="Password" value="Password1!" hidden />
+        <input type="submit" class="button" style="background-color: seagreen" value="Project Manager Demo" />
+    }
+    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <input name="Email" value="Developer@gmail.com" hidden />
+        <input name="Password" value="Password1!" hidden />
 
-    <input type="submit" class="button" style="background-color: coral" value="Developer Demo" />
-}
-@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
-{
-    @Html.AntiForgeryToken()
-    <input name="Email" value="Submitter@gmail.com" hidden />
-    <input name="Password" value="Password1!" hidden />
+        <input type="submit" class="button" style="background-color: coral" value="Developer Demo" />
+    }
+    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <input name="Email" value="Submitter@gmail.com" hidden />
+        <input name="Password" value="Password1!" hidden />
 
-    <input type="submit" class="button" style="background-color: palevioletred" value="Submitter Demo" />
-}
+        <input type="submit" class="button" style="background-color: palevioletred" value="Submitter Demo" />
+    }
+</div>
+
 <div class="col-md-offset-2">
     <p>Don't have an account? <a href="@Url.Action("Register")" class="pull-right button2">Register Here</a></p>
 </div>
-<div class="col-md-4">
-    <section id="socialLoginForm">
-        @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-    </section>
-</div>
-
+<center>
+    <div class="col-md-4">
+        <section id="socialLoginForm">
+            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+        </section>
+    </div>
+</center>
 <div class="footer">
     <div class="text-center">
         <small>© Dexter Norwood | Bug Tracker</small>
