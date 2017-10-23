@@ -4,9 +4,9 @@
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="#">Dashboard</a>
+            @*<a href="#">Dashboard</a>*@
         </li>
-        <li class="breadcrumb-item active">My Tables</li>
+        <li>Dashboard</li>
     </ol>
     <!-- Example DataTables Card-->
     @if (User.IsInRole("Admin, Project Manager"))
@@ -47,7 +47,7 @@
                         {
                         <tr>
                             <td>
-                                @Html.ToUserTime(item.Created, ViewBag.UserTimeZone as string, "MM/dd/yyyy h:mm:ss tt")
+                                @(item.Created.LocalDateTime)
                             </td>
                             <td>
                                 @(item.Title)

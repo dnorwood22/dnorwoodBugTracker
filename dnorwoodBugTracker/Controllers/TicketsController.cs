@@ -448,13 +448,14 @@ namespace dnorwoodBugTracker.Controllers
             Ticket ticket = db.Tickets.Find(id);
             TicketHistory ticketHistory = new TicketHistory();
 
-            db.Tickets.Remove(ticket);
+           
 
             ticketHistory.AuthorId = User.Identity.GetUserId();
             ticketHistory.Created = DateTimeOffset.UtcNow;
             ticketHistory.TicketId = ticket.Id;
             ticketHistory.Property = "TICKET REMOVED";
-            db.TicketHistories.Add(ticketHistory);  
+            db.TicketHistories.Add(ticketHistory);
+            db.Tickets.Remove(ticket);  
             db.SaveChanges();
 
             return RedirectToAction("Index");

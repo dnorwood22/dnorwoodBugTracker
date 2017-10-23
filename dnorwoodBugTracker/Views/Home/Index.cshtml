@@ -52,7 +52,7 @@
                         {
                         <tr>
                             <td>
-                               @Html.ToUserTime(item.Created, ViewBag.UserTimeZone as string, "MM/dd/yyyy h:mm:ss tt")               
+                               @(item.Created.LocalDateTime)
                             </td>
                             <td>
                                 @(item.Title)
@@ -75,12 +75,12 @@
 
                                 {
                                     @Html.ActionLink("Assigned Roles", "Index", "Admin")<br />
-                                    @Html.ActionLink("Assigned Users", "ProjectAssign", new { id = item.Id })<br />
-                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) <br />
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                    @Html.ActionLink("Assigned Users", "ProjectAssign", "Projects", new { id = item.Id }, null) <br />
+                                    @Html.ActionLink("Edit", "Edit", "Projects", new { id = item.Id }, null) <br />
+                                    @Html.ActionLink("Delete", "Delete", "Projects", new { id = item.Id }, null)
                                 }
                                            
-                                @Html.ActionLink("Details", "Details", new { id = item.Id }) <br />
+                                @Html.ActionLink("Details", "Details", "Projects", new { id = item.Id }, null) <br />
                             </td>
                         </tr>
                         }

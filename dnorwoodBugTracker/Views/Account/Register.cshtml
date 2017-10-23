@@ -38,11 +38,11 @@
                         <div class="form-row">
                             <div class="col-md-6">
                                 @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                                @Html.TextBoxFor(m => m.Password, new { @class = "form-control" })
+                                @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @type = "password" })
                             </div>
                             <div class="col-md-6">
                                 @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-                                @Html.TextBoxFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                                @Html.TextBoxFor(m => m.ConfirmPassword, new { @class = "form-control", @type = "password" })
                             </div>
                         </div>
                             <div class="col-md-6">
