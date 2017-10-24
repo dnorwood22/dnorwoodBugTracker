@@ -472,10 +472,10 @@
     <Content Include="assets\MultiSelect\MultiSelect.js" />
     <Content Include="assets\navbar.html" />
     <Content Include="assets\pics\.NetMVC.jpg" />
+    <Content Include="assets\pics\bkground.jpg" />
     <Content Include="assets\pics\dexlab.jpg" />
-    <Content Include="assets\pics\dexlab1.png" />
-    <Content Include="assets\pics\dexter video.gif" />
     <Content Include="assets\pics\html5css3JS.jpg" />
+    <Content Include="assets\pics\palmtree.jpg" />
     <Content Include="assets\pics\SQL.jpg" />
     <Content Include="assets\pics\visual_studio.jpg" />
     <Content Include="assets\register.html" />
