@@ -22,6 +22,7 @@ namespace dnorwoodBugTracker.Models
                 ViewBag.LastName = user.LastName;
                 ViewBag.FullName = user.FullName;
                 ViewBag.UserTimeZone = user.TimeZone;
+
                 ViewBag.Notifications = user.Notifications.OrderByDescending(n => n.Id).ToList();
 
                 base.OnActionExecuting(filterContext);

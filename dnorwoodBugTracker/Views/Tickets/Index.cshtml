@@ -75,11 +75,11 @@
                                 <td>
                                     @if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
 
-                                    {       
-                                            @Html.ActionLink("Assigned Roles", "Index", "Admin")<br />   
+                                    {
+                                            @Html.ActionLink("Assigned Roles", "Index", "Admin"); <br />   
                                             @*@Html.ActionLink("Assigned Users", "ProjectAssign", new { id = item.Id })<br />*@
-                                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) <br />
-                                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }); <br />
+                                            @Html.ActionLink("Delete", "Delete", new { id = item.Id });
                                     }
 
                                     @Html.ActionLink("Details", "Details", new { id = item.Id }) <br />
